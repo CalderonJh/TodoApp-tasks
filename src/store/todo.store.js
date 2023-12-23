@@ -1,10 +1,10 @@
 import {TodoModel} from "../todos/models/todo.model.js";
 
 
-const FilterStates = {
-    All: 'all',
-    Completed: 'completed',
-    Pending: 'pending'
+export const FilterStates = {
+    All: 'All',
+    Completed: 'Completed',
+    Pending: 'Pending'
 }
 
 /**
@@ -12,22 +12,23 @@ const FilterStates = {
  * @type {{filter: string, todos: TodoModel[]}}
  */
 const state = {
-    filter: FilterStates.All,
+    filter: FilterStates.Pending,
     todos:[
-        new TodoModel('test de todo model'),
-        new TodoModel('test de todo model 2'),
-        new TodoModel('test de todo model 3'),
+        new TodoModel('What is there to do?'),
     ]
 }
 
 
 const initStore = () => {
-    console.log('init store test 👌, state log', state)
+    if ( !localStorage.getItem('state')) return;
+    const {todos = [], filter = FilterStates.All} = JSON.parse(localStorage.getItem('state'))
+    state.todos = todos
+    state.filter = filter
 }
 
 
-const loadStore = () => {
-    throw new Error('loadStore is not implemented yet')
+const saveStateToLocalStorage = () => {
+    localStorage.setItem('state', JSON.stringify(state))
 }
 
 
@@ -46,6 +47,7 @@ const getTodos = ( filter = FilterStates.All ) => {
 const addTodo = ( description ) => {
     if (!description) throw new Error('addTodo Error, description is required')
     state.todos.push(new TodoModel(description))
+    saveStateToLocalStorage()
 }
 
 
@@ -54,22 +56,27 @@ const toggleTodo = ( todoId ) => {
         if (todo.id === todoId) todo.done = !todo.done
         return todo
     })
+    saveStateToLocalStorage()
 }
 
 
 const deleteTodo = ( todoId ) => {
     state.todos = state.todos.filter(todo => todo.id !== todoId)
+    saveStateToLocalStorage()
 }
 
 
 const deleteCompleted = () => {
-    state.todos = state.todos.filter(todo => todo.done)
+    state.todos = state.todos.filter(todo => !todo.done)
+    saveStateToLocalStorage()
 }
 
 
 const setFilter = ( newFilter = FilterStates.All) => {
     if (Object.keys(FilterStates).includes(newFilter)) state.filter = newFilter
     else throw new Error(`Filter '${newFilter}' is not allowed`)
+    saveStateToLocalStorage()
+    console.log(state.filter, 'xd')
 }
 
 
@@ -85,7 +92,6 @@ export default {
     getFilter,
     getTodos,
     initStore,
-    loadStore,
     setFilter,
-    toggleTodo
+    toggleTodo,
 }

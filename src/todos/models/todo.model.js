@@ -12,7 +12,6 @@ export class TodoModel{
         this.id = uuid()
         this.description = description
         this.done = false
-        this.created = new Date()
     }
 
 }
