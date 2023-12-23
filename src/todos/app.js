@@ -1,14 +1,15 @@
 import html from './app.html?raw'
 import TodoStore, {FilterStates} from "../store/todo.store.js";
 import todoStore from "../store/todo.store.js";
-import {renderTodos} from "./use-cases/index.js";
+import {renderPendingTodos, renderTodos,} from "./use-cases/index.js";
 
 
 const ElementIDs ={
     TodoList: '.todo-list',
     newTodoInput: '#new-todo-input',
     ButtonClearCompleted: '.clear-completed',
-    TodosFilters: '.filter'
+    TodosFilters: '.filter',
+    PendingCountLabel: '#pending-count'
 }
 
 /**
@@ -21,6 +22,11 @@ export const App = (elementId) => {
     const displayTodos = () => {
         const todos = TodoStore.getTodos(todoStore.getFilter())
         renderTodos(ElementIDs.TodoList, todos)
+        updatePendingTodos()
+    }
+
+    const updatePendingTodos = () => {
+        renderPendingTodos(ElementIDs.PendingCountLabel)
     }
 
     // runs automatically when the App function is called
@@ -38,7 +44,7 @@ export const App = (elementId) => {
     const todosListUl = document.querySelector(ElementIDs.TodoList)
     const buttonClearCompleted = document.querySelector(ElementIDs.ButtonClearCompleted)
     const filtersListItems = document.querySelectorAll(ElementIDs.TodosFilters)
-    console.log(filtersListItems)
+
 
     // events
     newDescriptionInput.addEventListener('keyup', (event) => {

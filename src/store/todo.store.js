@@ -76,7 +76,6 @@ const setFilter = ( newFilter = FilterStates.All) => {
     if (Object.keys(FilterStates).includes(newFilter)) state.filter = newFilter
     else throw new Error(`Filter '${newFilter}' is not allowed`)
     saveStateToLocalStorage()
-    console.log(state.filter, 'xd')
 }
 
 
