@@ -22,7 +22,7 @@ const state = {
 }
 
 /**
- *  Initializes app status based on data stored in localStorage,
+ * Initializes app status based on data stored in localStorage,
  * keeping the default state if there aren't data available.
  * */
 const initStore = () => {

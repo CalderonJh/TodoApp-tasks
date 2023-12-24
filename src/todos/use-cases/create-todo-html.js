@@ -1,5 +1,5 @@
 /**
- * create an html element to render a to-do
+ * Creates an HTML element to render a to-do.
  * @param {TodoModel} todo  TodoModel object, {id, description, done} are needed
  */
 export const createTodoHtml = (todo) => {
