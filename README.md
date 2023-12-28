@@ -1,2 +1,2 @@
-# TodoApp-tasks-
-implementacion js de un template CSS de lista de tareas sin usar frameworks ni librerías.
+# TodoApp-tasks Vanilla Js
+Implementacion javascript de un template CSS de una lista de tareas (no frameworks, no librerías).
